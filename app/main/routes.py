@@ -38,7 +38,7 @@ def index():
     return render_template("index.html")
 
 
-@bp.route('/upload', methods=['POST'])
+@bp.route('/predict', methods=['POST'])
 def predict():
     file = request.files['image']
     result = {}

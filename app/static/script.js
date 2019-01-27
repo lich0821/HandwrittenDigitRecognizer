@@ -55,7 +55,7 @@ $("#predict").click(function() {
 
     $.ajax({
         type: "POST",
-        url: "/upload",
+        url: "/predict",
         dataType: "json",
         processData: false,
         contentType: false,
