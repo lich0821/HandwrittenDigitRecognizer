@@ -1,7 +1,7 @@
 var canvas = document.getElementById("writting_panel");
 var ctx = canvas.getContext("2d");
 ctx.strokeStyle = "Black";
-ctx.lineWidth = 5;
+ctx.lineWidth = 15;
 
 var startX,
     startY,

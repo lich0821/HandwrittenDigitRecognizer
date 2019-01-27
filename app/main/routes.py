@@ -9,6 +9,7 @@ import json
 import PIL
 from PIL import Image
 import numpy as np
+from recognizer import predict_with_path
 
 
 def print_image(image):
@@ -41,23 +42,14 @@ def index():
 def predict():
     file = request.files['image']
     result = {}
-    print(f"predict: {type(file)}")
 
     if file:
         filename = secure_filename(file.name) + '.jpeg'
         file.save(os.path.join('.uploads', filename))
         result.update({"saved": True})
         result.update({"file": filename})
-        image = Image.open(os.path.join('.uploads', filename))
-        # image.show()
-
-        inp = np.asarray(image)
-        img = Image.fromarray(inp[:, :, 3])
-        small = resize_image(img, 28)
-        # small.show()
-
-        aaa = np.asarray(small)
-        print_image(aaa)
+        pred = predict_with_path(os.path.join('.uploads', filename))
+        print(pred)
 
     else:
         result.update({"saved": False})
