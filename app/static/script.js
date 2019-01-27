@@ -70,9 +70,12 @@ $("#predict").click(function() {
                 src: canvas.toDataURL()
             });
 
+            $("#gallery").empty();
+            $("#result").empty();
             $("#gallery").append(img.addClass("thumbnail"));
+            $("#result").append(result.predict);
+
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            $("#result").append(result.predict)
         },
         error: function() {
             console.dir("error");
