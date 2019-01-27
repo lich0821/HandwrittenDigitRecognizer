@@ -49,7 +49,7 @@ def predict():
         result.update({"saved": True})
         result.update({"file": filename})
         pred = predict_with_path(os.path.join('.uploads', filename))
-        print(pred)
+        result.update({"predict": int(pred[0])})
 
     else:
         result.update({"saved": False})

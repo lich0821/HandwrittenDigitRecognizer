@@ -72,6 +72,7 @@ $("#predict").click(function() {
 
             $("#gallery").append(img.addClass("thumbnail"));
             ctx.clearRect(0, 0, canvas.width, canvas.height);
+            $("#result").append(result.predict)
         },
         error: function() {
             console.dir("error");
