@@ -1,0 +1,65 @@
+#! /usr/bin/env python
+# -*- coding: utf-8 -*-
+
+from app.main import bp
+from flask import render_template, request
+from werkzeug import secure_filename
+import os
+import json
+import PIL
+from PIL import Image
+import numpy as np
+
+
+def print_image(image):
+    shape = image.shape
+    for i in range(shape[0]):
+        for j in range(shape[1]):
+            dot = image[i][j]
+            if dot < 10:
+                print("  ", end="")
+            else:
+                print("##", end="")
+
+        print("")
+
+
+def resize_image(image, size):
+    img = PIL.Image.fromarray(np.uint8(image))
+    img = img.resize((size, size), PIL.Image.ANTIALIAS)
+
+    return img
+
+
+@bp.route("/")
+@bp.route("/index")
+def index():
+    return render_template("index.html")
+
+
+@bp.route('/upload', methods=['POST'])
+def predict():
+    file = request.files['image']
+    result = {}
+    print(f"predict: {type(file)}")
+
+    if file:
+        filename = secure_filename(file.name) + '.jpeg'
+        file.save(os.path.join('.uploads', filename))
+        result.update({"saved": True})
+        result.update({"file": filename})
+        image = Image.open(os.path.join('.uploads', filename))
+        # image.show()
+
+        inp = np.asarray(image)
+        img = Image.fromarray(inp[:, :, 3])
+        small = resize_image(img, 28)
+        # small.show()
+
+        aaa = np.asarray(small)
+        print_image(aaa)
+
+    else:
+        result.update({"saved": False})
+
+    return json.dumps(result)

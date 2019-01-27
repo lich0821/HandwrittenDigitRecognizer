@@ -1,0 +1,9 @@
+#writting_panel {
+    border: 2px solid #999;
+    cursor: crosshair;
+    /* background-color: black; */
+}
+.thumbnail {
+    border: 2px solid #999;
+    margin-right: 5px;
+}
