@@ -169,14 +169,14 @@ def resize_image(image, size):
 
 
 def predict_with_path(path):
-    origin = Image.open(path)
+    origin = Image.open(path).convert("L")
     inp = np.asarray(origin)
-    extracted = Image.fromarray(inp[:, :, 3])
+    extracted = Image.fromarray(inp)
     resized = resize_image(extracted, 28)
 
     img = np.asarray(resized)
-    # Binarized picture
-    img = 255.0 * (img > 128)
+    # Invert and Binarize picture
+    img = 255.0 * (img < 128)
     img = img.reshape(1, 784)
 
     return predict_with_model(img)

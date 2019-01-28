@@ -1,45 +1,19 @@
-var canvas = document.getElementById("writting_panel");
-var ctx = canvas.getContext("2d");
-ctx.strokeStyle = "Black";
-ctx.lineWidth = 15;
-
-var startX,
-    startY,
-    x,
-    y,
-    borderWidth = 10,
-    isDrawing = false;
-
-$("#writting_panel")
-    .mousedown(function(e) {
-        isDrawing = true;
-        startX = e.pageX - $(this).offset().left - borderWidth;
-        startY = e.pageY - $(this).offset().top - borderWidth;
-    })
-    .mousemove(function(e) {
-        if (!isDrawing) return;
-        x = e.pageX - $(this).offset().left - borderWidth;
-        y = e.pageY - $(this).offset().top - borderWidth;
-        ctx.beginPath();
-        ctx.moveTo(startX, startY);
-        ctx.lineTo(x, y);
-        ctx.stroke();
-        startX = x;
-        startY = y;
-    })
-    .mouseup(function() {
-        isDrawing = false;
-    })
-    .mouseleave(function() {
-        isDrawing = false;
-    });
+var customBoard = new DrawingBoard.Board("custom-board", {
+    controls: false,
+    webStorage: false,
+    background: "#F8F8FF",
+    color: "black",
+    size: 15,
+    fillTolerance: 150
+});
 
 $("#erase").click(function() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    customBoard.resetBackground();
+    customBoard.clearWebStorage();
 });
 
 $("#predict").click(function() {
-    var base64data = canvas.toDataURL("image/jpeg;base64;").split(",")[1];
+    var base64data = customBoard.getImg().split(",")[1];
     var data = atob(base64data);
     var buff = new ArrayBuffer(data.length);
     var arr = new Uint8Array(buff);
@@ -67,7 +41,7 @@ $("#predict").click(function() {
             var img = $("<img>").attr({
                 width: 28,
                 height: 28,
-                src: canvas.toDataURL()
+                src: customBoard.getImg()
             });
 
             $("#gallery").empty();
@@ -75,7 +49,8 @@ $("#predict").click(function() {
             $("#gallery").append(img.addClass("thumbnail"));
             $("#result").append(result.predict);
 
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            customBoard.resetBackground();
+            customBoard.clearWebStorage();
         },
         error: function() {
             console.dir("error");
