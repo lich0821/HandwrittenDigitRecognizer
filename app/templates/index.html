@@ -1,8 +1,9 @@
 {% extends "layout.html" %} {% block body %}
 <div style="text-align: center">
-    <p>请写入数字，然后点击预测</p>
+    <h3>请写入数字，然后点击预测</h3>
     <div class="board" id="custom-board"></div>
-    <input type="button" id="erase" value="Erase" /> &nbsp;&nbsp; <input type="button" id="predict" value="Predict" />
+    <input type="button" id="erase" value="Erase" style="margin:10px;" />
+    <input type="button" id="predict" value="Predict" style="margin:10px;" />
     <div id="gallery"></div>
     <div id="result"></div>
     <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
