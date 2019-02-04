@@ -9,7 +9,7 @@ import json
 import PIL
 from PIL import Image
 import numpy as np
-from recognizer import predict_with_path
+from reg_cnn import cnn
 
 
 def print_image(image):
@@ -48,7 +48,7 @@ def predict():
         file.save(os.path.join('.uploads', filename))
         result.update({"saved": True})
         result.update({"file": filename})
-        pred = predict_with_path(os.path.join('.uploads', filename))
+        pred = cnn.predict_with_path(".uploads/image.jpeg")
         result.update({"predict": int(pred[0])})
 
     else:
